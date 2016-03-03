@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    description: Run a simple HTTP test using Apache Bench
+  name: ab
+objects:
+- apiVersion: extensions/v1beta1
+  kind: Job
+  metadata:
+    name: ${TEST_NAME}
+  spec:
+    selector:
+      matchLabels:
+        app: ${TEST_NAME}
+    parallelism: ${TEST_PARALLELISM}
+    completions: ${TEST_COMPLETIONS}
+    template:
+      metadata:
+        name: ${TEST_NAME}
+        labels:
+          app: ${TEST_NAME}
+      spec:
+        containers:
+        - name: ${TEST_NAME}
+          image: ab-docker
+          env:
+            - name: REQUESTS
+              value: ${REQUESTS}
+            - name: CONCURRENCY
+              value: ${CONCURRENCY}
+            - name: VERBOSITY
+              value: ${VERBOSITY}
+            - name: TIMELIMIT
+              value: ${TIMELIMIT}
+            - name: TIMEOUT
+              value: ${TIMEOUT}  
+        restartPolicy: Never
+parameters:
+- name: TEST_NAME
+  value: 'ab'
+- name: TEST_PARALLELISM
+  value: '1'
+- name: TEST_COMPLETIONS
+  value: '1'
+- name: REQUESTS
+  value: '1'
+- name: CONCURRENCY
+  value: '1'
+- name: VERBOSITY
+  value: ''
+- name: TIMELIMIT
+  value: ''
+- name: TIMEOUT
+  value: ''
