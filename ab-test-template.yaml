@@ -23,8 +23,7 @@ objects:
       spec:
         containers:
         - name: ${TEST_NAME}
-          image: ab-docker
-# source from https://github.com/edseymour/ab-docker
+          image: edseymour/ab
           env:
             - name: REQUESTS
               value: ${REQUESTS}
