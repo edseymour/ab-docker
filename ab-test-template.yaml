@@ -24,9 +24,12 @@ objects:
         containers:
         - name: ${TEST_NAME}
           image: ab-docker
+# source from https://github.com/edseymour/ab-docker
           env:
             - name: REQUESTS
               value: ${REQUESTS}
+            - name: URL
+              value: ${URL}
             - name: CONCURRENCY
               value: ${CONCURRENCY}
             - name: VERBOSITY
@@ -39,6 +42,8 @@ objects:
 parameters:
 - name: TEST_NAME
   value: 'ab'
+- name: URL
+  required: true
 - name: TEST_PARALLELISM
   value: '1'
 - name: TEST_COMPLETIONS
